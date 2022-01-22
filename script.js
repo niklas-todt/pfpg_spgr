@@ -63,14 +63,19 @@ async function drawImageFromInput() {
             i++;
             if (i>20) {
               size = Math.min(img.height, img.width);
-              x1 = 0;
-              y1 = 0;
+              let topBound = (size - faceHeight) / 2;
+              let leftBound = (size - faceWidth) / 2;
               if (img.height < img.width) {
-                //breit
-                x1 = img.width / 2 - size / 2;
+                y1 = 0;
+                x1 = x1 - leftBound;
+                x1 = Math.max(x1, 0);
               } else if (img.height > img.width) {
-                //hoch
-                y1 = img.height / 2 - size / 2;
+                x1 = 0;
+                y1 = y1 - topBound;
+                y1 = Math.max(y1, 0);
+              } else {
+                x1 = 0;
+                y1 = 0;
               }
               context.drawImage(img, x1, y1, size, size, 0, 0, 1080, 1080);
               break
