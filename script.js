@@ -31,10 +31,9 @@ input.addEventListener('change', async function () {
   });
 
 async function centerFace() {
-    console.log('CenterFace');
     const detection = await faceapi.detectSingleFace(inputStorage, new faceapi.TinyFaceDetectorOptions());
     return Object.values(detection.box)
-  }
+  };
 
 async function drawImageFromInput() {
   context.clearRect(0, 0, 1080, 1080);
@@ -54,22 +53,29 @@ async function drawImageFromInput() {
           let faceWidth = data[2];
           let faceHeight = data[3];
 
-          let size = faceHeight * 1.8;
+          let size = faceHeight * 2;
           let i = 1
           y1 = y1 - ((size - faceHeight)/1.5);
           x1 = x1 - ((size - faceWidth) / 2);
 
           while (x1 < 0 || y1 < 0) {
-            size = faceHeight * (1.8-(0.1*i));
+            size = faceHeight * (2-(0.1*i));
             i++;
             if (i>20) {
-              window.alert("Das Gesicht ist leider zu nahe am Rand. Scheide dein Foto zuerst zu und probiere es dann nocheinmal.");
+              size = Math.min(img.height, img.width);
+              x1 = 0;
+              y1 = 0;
+              if (img.height < img.width) {
+                //breit
+                x1 = img.width / 2 - size / 2;
+              } else if (img.height > img.width) {
+                //hoch
+                y1 = img.height / 2 - size / 2;
+              }
+              context.drawImage(img, x1, y1, size, size, 0, 0, 1080, 1080);
               break
             }
-            console.log("zoom");
           }
-
-          console.log("Gesicht " + x1, y1, size);
           context.drawImage(img, x1, y1, size, size, 0, 0, 1080, 1080);
         });
       } catch {
