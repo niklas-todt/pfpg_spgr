@@ -98,6 +98,7 @@ async function drawImageFromInput() {
       }
 
         context.drawImage(image, 0, 0, 1080, 1080);
+        prepareDownloadLink();
 
       if (typeof callback === 'function') callback();
     });
@@ -107,7 +108,7 @@ async function drawImageFromInput() {
 
 function prepareDownloadLink() {
   downloadBtn.disabled = false;
-  download.href = canvas.toDataURL();
+  download.href = canvas.toDataURL("image/png");
 }
 
 placeholder.onload = drawImageFromInput;
