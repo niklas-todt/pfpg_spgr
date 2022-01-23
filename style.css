@@ -101,6 +101,9 @@ svg {
   left: 0;
 }
 
+select option {
+  font-family: Replica, sans-serif;
+}
 
 @media ( max-width: 720px ) {
   #content {

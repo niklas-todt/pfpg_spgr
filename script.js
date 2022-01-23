@@ -1,3 +1,5 @@
+// Global Variables
+
 const input = document.getElementById('input-file'),
       upload = document.getElementById("uploadButton"),
       downloadBtn = document.getElementById("downloadButton"),
@@ -12,7 +14,28 @@ const input = document.getElementById('input-file'),
       dLink = document.getElementById('downloadLink'),
       inputStorage = document.getElementById('inputStorage'),
       image = document.getElementById('filter'),
+      selectLang = document.getElementById('lang'),
       downloadBtn.disabled = true;
+
+//Onload LANG Handling
+
+selectLang.onload = function() {
+  if (navigator.language.toLowerCase().includes('it')) {
+    selectLang.value = 'it';
+  } else if (navigator.language.toLowerCase() == 'rm') {
+    selectLang.value = 'rm';
+  } else {
+    selectLang.value = 'de';
+  }
+};
+
+//DragAndDrop
+
+document.body.addEventListener('dragover', (event) => {
+  event.stopPropagation();
+  event.preventDefault();
+  alert('Bitte lade das Foto über HOCHLADEN hoch.');
+});
 
 Promise.all([
   faceapi.nets.tinyFaceDetector.loadFromUri('face-detection/models'),
@@ -21,6 +44,19 @@ Promise.all([
 
 uploadFrame.addEventListener('click', function() {
       upload.click();
+});
+
+selectLang.addEventListener('change', function() {
+  if (selectLang.options[selectLang.selectedIndex].value === 'it') {
+    image.src = 'assets/filter-it.png';
+  } else if (selectLang.options[selectLang.selectedIndex].value === 'rm') {
+    image.src = 'assets/filter-rm.png';
+  } else {
+    image.src = 'assets/filter-de.png';
+  };
+  if (!downloadBtn.disabled) {
+    context.drawImage(image, 0, 0, 1080, 1080);
+  };
 });
 
 input.addEventListener('change', async function () {
@@ -53,15 +89,15 @@ async function drawImageFromInput() {
           let faceWidth = data[2];
           let faceHeight = data[3];
 
-          let size = faceHeight * 2;
+          let size = faceHeight * 2.5;
           let i = 1
-          y1 = y1 - ((size - faceHeight)/1.5);
+          y1 = y1 - ((size - faceHeight)/ 2);
           x1 = x1 - ((size - faceWidth) / 2);
 
           while (x1 < 0 || y1 < 0) {
-            size = faceHeight * (2-(0.1*i));
+            size = faceHeight * (2.5-(0.1*i));
             i++;
-            if (i>20) {
+            if (i>25) {
               size = Math.min(img.height, img.width);
               let topBound = (size - faceHeight) / 2;
               let leftBound = (size - faceWidth) / 2;
