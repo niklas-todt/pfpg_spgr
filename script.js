@@ -89,13 +89,13 @@ async function drawImageFromInput() {
           let faceWidth = data[2];
           let faceHeight = data[3];
 
-          let size = faceHeight * 2.5;
+          let size = faceHeight * 2.1;
           let i = 1
           y1 = y1 - ((size - faceHeight)/ 2);
           x1 = x1 - ((size - faceWidth) / 2);
 
           while (x1 < 0 || y1 < 0) {
-            size = faceHeight * (2.5-(0.1*i));
+            size = faceHeight * (2.1-(0.1*i));
             i++;
             if (i>25) {
               size = Math.min(img.height, img.width);
@@ -113,11 +113,11 @@ async function drawImageFromInput() {
                 x1 = 0;
                 y1 = 0;
               }
-              context.drawImage(img, x1, y1, size, size, 0, 75, 1055, 1030);
+              context.drawImage(img, x1, y1, size, size, 80, 80, 1000, 1000);
               break
             }
           }
-          context.drawImage(img, x1, y1, size, size, 0, 75, 1055, 1030);
+          context.drawImage(img, x1, y1, size, size, 80, 80, 1000, 1000);
         });
       } catch {
         size = Math.min(img.height, img.width);
@@ -130,7 +130,7 @@ async function drawImageFromInput() {
           //hoch
           y1 = img.height / 2 - size / 2;
         }
-        context.drawImage(img, x1, y1, size, size, 10, 10, 1070, 1070);
+        context.drawImage(img, x1, y1, size, size, 80, 80, 1000, 1000);
       }
 
         context.drawImage(image, 0, 0, 1080, 1080);
