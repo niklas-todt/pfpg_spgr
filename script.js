@@ -113,11 +113,11 @@ async function drawImageFromInput() {
                 x1 = 0;
                 y1 = 0;
               }
-              context.drawImage(img, x1, y1, size, size, 20, 30, 1070, 1080);
+              context.drawImage(img, x1, y1, size, size, 0, 75, 1055, 1030);
               break
             }
           }
-          context.drawImage(img, x1, y1, size, size, 20, 30, 1070, 1080);
+          context.drawImage(img, x1, y1, size, size, 0, 75, 1055, 1030);
         });
       } catch {
         size = Math.min(img.height, img.width);
